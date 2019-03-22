@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2017-12-15 15:40:03
-# @Author  : KlausQiu
-# @QQ      : 375235513
-# @github  : https://github.com/KlausQIU
+# @Author  : Xinzhou Zhao
+# @github  : https://github.com/xinzhou5
 
 import base64
 import hmac
