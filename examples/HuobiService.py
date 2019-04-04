@@ -7,13 +7,13 @@ from HuobiUtil import *
 Market data API
 '''
 
-# 获取KLine
+# Get KLine
 
 
 def get_kline(symbol, period, size):
     """
     :param symbol
-    :param period: 可选值：{1min, 5min, 15min, 30min, 60min, 1day, 1mon, 1week, 1year }
+    :param period: range: {1min, 5min, 15min, 30min, 60min, 1day, 1mon, 1week, 1year}
     :param size: [1,2000]
     :return:
     """
@@ -25,11 +25,11 @@ def get_kline(symbol, period, size):
     return http_get_request(url, params)
 
 
-# 获取marketdepth
+# Get marketdepth
 def get_depth(symbol, type):
     """
     :param symbol: 
-    :param type: 可选值：{ percent10, step0, step1, step2, step3, step4, step5 }
+    :param type: range: { percent10, step0, step1, step2, step3, step4, step5 }
     :return:
     """
     params = {'symbol': symbol,
@@ -39,10 +39,10 @@ def get_depth(symbol, type):
     return http_get_request(url, params)
 
 
-# 获取tradedetail
+# Get tradedetail
 def get_trade(symbol):
     """
-    :param symbol: 可选值：{ ethcny }
+    :param symbol: range: { ethcny }
     :return:
     """
     params = {'symbol': symbol}
@@ -51,10 +51,10 @@ def get_trade(symbol):
     return http_get_request(url, params)
 
 
-# 获取 Market Detail 24小时成交量数据
+# Get Market Detail 24hr Transaction Volume Data
 def get_detail(symbol):
     """
-    :param symbol: 可选值：{ ethcny }
+    :param symbol: range: { ethcny }
     :return:
     """
     params = {'symbol': symbol}
@@ -62,8 +62,7 @@ def get_detail(symbol):
     url = MARKET_URL + '/market/detail'
     return http_get_request(url, params)
 
-# 查询系统支持的所有交易对
-
+# search for all the system supported transaction pairs
 
 def get_symbols():
     """
@@ -87,7 +86,7 @@ def get_accounts():
     return api_key_get(params, path)
 
 ACCOUNT_ID = 0
-# 获取当前账户资产
+# Get user's current asset 
 def get_balance(acct_id=None):
     """
     :param acct_id
@@ -108,15 +107,13 @@ def get_balance(acct_id=None):
     return api_key_get(params, url)
 
 
-# 创建并执行订单
-
-
+# Create and send order
 def send_order(amount, source, symbol, _type, price=0):
     """
     :param amount: 
-    :param source: 如果使用借贷资产交易，请在下单接口,请求参数source中填写'margin-api'
+    :param source: 
     :param symbol: 
-    :param _type: 可选值 {buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖}
+    :param _type: range: {buy-market, sell-market, buy-limit, sell-limit}
     :param price: 
     :return: 
     """
@@ -139,7 +136,7 @@ def send_order(amount, source, symbol, _type, price=0):
     return api_key_post(params, url)
 
 
-# 撤销订单
+# Cancel order 
 def cancel_order(order_id):
     """
 
@@ -151,7 +148,7 @@ def cancel_order(order_id):
     return api_key_post(params, url)
 
 
-# 查询某个订单
+# Search for an order
 def order_info(order_id):
     """
 
@@ -163,7 +160,7 @@ def order_info(order_id):
     return api_key_get(params, url)
 
 
-# 查询某个订单的成交明细
+# Search for the order detail of an order
 def order_matchresults(order_id):
     """
 
@@ -175,16 +172,16 @@ def order_matchresults(order_id):
     return api_key_get(params, url)
 
 
-# 查询当前委托、历史委托
+# Get order list
 def orders_list(symbol, states, types=None, start_date=None, end_date=None, _from=None, direct=None, size=None):
     """
     :param symbol: 
-    :param states: 可选值 {pre-submitted 准备提交, submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销}
-    :param types: 可选值 {buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖}
+    :param states: range {pre-submitted, submitted, partial-filled, partial-canceled, filled, canceled}
+    :param types: range {buy-market, sell-market, buy-limit, sell-limit}
     :param start_date: 
     :param end_date: 
     :param _from: 
-    :param direct: 可选值{prev 向前，next 向后}
+    :param direct: range{prev, next}
     :param size: 
     :return: 
     """
@@ -207,15 +204,15 @@ def orders_list(symbol, states, types=None, start_date=None, end_date=None, _fro
     return api_key_get(params, url)
 
 
-# 查询当前成交、历史成交
+# Search for the trade records of an account
 def orders_matchresults(symbol, types=None, start_date=None, end_date=None, _from=None, direct=None, size=None):
     """
     :param symbol: 
-    :param types: 可选值 {buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖}
+    :param types: range {buy-market, sell-market, buy-limit, sell-limit}
     :param start_date: 
     :param end_date: 
     :param _from: 
-    :param direct: 可选值{prev 向前，next 向后}
+    :param direct: range {prev, next}
     :param size: 
     :return: 
     """
@@ -237,13 +234,13 @@ def orders_matchresults(symbol, types=None, start_date=None, end_date=None, _fro
     return api_key_get(params, url)
 
 
-# 申请提现虚拟币
+# Create a Withdraw Request
 def withdraw(address, amount, currency, fee=0, addr_tag=""):
     """
 
     :param address_id: 
     :param amount: 
-    :param currency:btc, ltc, bcc, eth, etc ...(火币Pro支持的币种)
+    :param currency:btc, ltc, bcc, eth, etc ...
     :param fee: 
     :param addr_tag:
     :return: {
@@ -260,9 +257,7 @@ def withdraw(address, amount, currency, fee=0, addr_tag=""):
 
     return api_key_post(params, url)
 
-# 申请取消提现虚拟币
-
-
+# Cancel a Withdraw Request
 def cancel_withdraw(address_id):
     """
 
@@ -278,17 +273,13 @@ def cancel_withdraw(address_id):
     return api_key_post(params, url)
 
 
-'''
-借贷API
-'''
-
-# 创建并执行借贷订单
+# Place a New Order
 def send_margin_order(amount, source, symbol, _type, price=0):
     """
     :param amount: 
     :param source: 'margin-api'
     :param symbol: 
-    :param _type: 可选值 {buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖}
+    :param _type: range {buy-market, sell-market, buy-limit, sell-limit}
     :param price: 
     :return: 
     """
@@ -310,7 +301,7 @@ def send_margin_order(amount, source, symbol, _type, price=0):
     url = '/v1/order/orders/place'
     return api_key_post(params, url)
 
-# 现货账户划入至借贷账户
+# Transfer Asset from Spot Trading Account to Margin Account
 def exchange_to_margin(symbol,currency,amount):
     """
     :param amount: 
@@ -325,7 +316,7 @@ def exchange_to_margin(symbol,currency,amount):
     url = "/v1/dw/transfer-in/margin"
     return api_key_post(params,url)
 
-# 借贷账户划出至现货账户
+# Transfer Asset from Margin Account to Spot Trading Account
 def margin_to_exchange(symbol,currency,amount):
     """
     :param amount: 
@@ -340,7 +331,7 @@ def margin_to_exchange(symbol,currency,amount):
     url = "/v1/dw/transfer-out/margin"
     return api_key_post(params,url)
 
-# 申请借贷
+# Request a Margin Loan
 def get_margin(symbol, currency, amount):
     """
     :param amount: 
@@ -354,7 +345,7 @@ def get_margin(symbol, currency, amount):
     url = "/v1/margin/orders"
     return api_key_post(params, url)
 
-# 归还借贷
+# Repay Margin Loan
 def repay_margin(order_id, amount):
     """
     :param order_id: 
@@ -366,12 +357,12 @@ def repay_margin(order_id, amount):
     url = "/v1/margin/orders/{0}/repay".format(order_id)
     return api_key_post(params, url)
 
-# 借贷订单
+# Search Past Margin Orders
 def loan_orders(symbol, currency, start_date="", end_date="", start="", direct="", size=""):
     """
     :param symbol: 
     :param currency: 
-    :param direct: prev 向前，next 向后
+    :param direct: prev , next
     :return: 
     """
     params = {"symbol":symbol,
@@ -390,7 +381,7 @@ def loan_orders(symbol, currency, start_date="", end_date="", start="", direct="
     return api_key_get(params,url)
 
 
-# 借贷账户详情,支持查询单个币种
+#Get the Balance of the Margin Loan Account
 def margin_balance(symbol):
     """
     :param symbol: 

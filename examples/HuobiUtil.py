@@ -34,20 +34,19 @@ DEFAULT_POST_HEADERS = {
     'Accept-Language': LANG,
     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0'
 }
-# 此处填写APIKEY
+# Use your own APIKEY
 
 ACCESS_KEY = "YOUR_ACCESS_KEY"
 SECRET_KEY = "YOUR_SECRET_KEY"
 
 
-# 首次运行可通过get_accounts()获取acct_id,然后直接赋值,减少重复获取。
+# If it's your first time running, you can use get_accounts() to get acct_id
 ACCOUNT_ID = None
 
 
-# API 请求地址
+# API request utl
 MARKET_URL = TRADE_URL = "https://api.huobi.com"
 
-#各种请求,获取数据方式
 def http_get_request(url, params, add_to_headers=None):
     headers = {
         "Content-type": "application/x-www-form-urlencoded",
